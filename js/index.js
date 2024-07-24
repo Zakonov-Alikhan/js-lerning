@@ -6,13 +6,15 @@ import { createFooter } from './footer.js';
 document.body.prepend(createHeader());
 document.body.append(createFooter());
 
+/*Проверяем прогрузились ли HTML-элементы*/
 document.addEventListener('DOMContentLoaded', () => {
-    const lox_button = document.querySelector("#lox_button");
+    //Page 1
+    const lox_button = document.getElementById("lox_button");
 
     if (lox_button) {
         function lox_detector(){
             const name = prompt("Как твое имя, лох?");
-            const lox = document.querySelector("#lox");
+            const lox = document.getElementById("lox");
 
             lox.textContent = `ВНИМАНИЕ!!! ${name} - ЛОХ`;
         }
@@ -21,15 +23,42 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log('lox_detector element not found on this page');
     }
+    
+    const add_lox_button = document.getElementById("add_lox");
+    if (add_lox_button) {
+        function Add_lox_func(){
+            const container = document.getElementById("add_lox_block");
+            const content = document.createElement("div");
+            
+            content.classList.add("lox_content");
+            content.textContent = "Ты Лох!";
 
-});
+            container.appendChild(content);
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const FizzBuzz_button = document.querySelector("#FizzBuzz_button");
+        add_lox_button.addEventListener("click", Add_lox_func);
+    } else {
+        console.log('add_lox_button element not found on this page');
+    }
+
+    const remove_All_btn = document.getElementById("remove_all");
+    if (remove_All_btn) {
+        function remove_text_func(){
+            const container = document.getElementById("add_lox_block");
+            container.textContent = "";
+        }
+
+        remove_all.addEventListener("click", remove_text_func);
+    } else {
+        console.log('remove_All_btn element not found on this page');
+    }
+
+    //Page 2
+    const FizzBuzz_button = document.getElementById("FizzBuzz_button");
     if (FizzBuzz_button) {
         function FizzBuzz() {
             const prompt_num = prompt("Напиши число, лох");
-            const fizzBuzz_block = document.querySelector("#FizzBuzz_block");
+            const fizzBuzz_block = document.getElementById("FizzBuzz_block");
 
             if (!isPositiveInteger(+prompt_num)) {
                 fizzBuzz_block.textContent = `Тебе сказали ввести ЧИСЛО, дебил`; 
@@ -61,15 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log('FizzBuzz element not found on this page');
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-    const Game_1_button = document.querySelector("#game_1");
+    //Page 3
+    const Game_1_button = document.getElementById("game_1");
     if (Game_1_button) {
         function Game_1_func() {
-            const computerChoiseBlock = document.querySelector("#computerChoiseBlock");
-            const userChoiseBlock = document.querySelector("#userChoiseBlock");
-            const resultBlock = document.querySelector("#resultBlock");
+            const computerChoiseBlock = document.getElementById("computerChoiseBlock");
+            const userChoiseBlock = document.getElementById("userChoiseBlock");
+            const resultBlock = document.getElementById("resultBlock");
             const start = prompt("Добро пожаловать в игру: Камень, Ножницы, Бумага!\nВведи цифру обозначающую твой выбор?\n1.Камень\n2.Ножницы\n3.Бумага");
             let myChoice = "";
                 if (+start == 1) {
@@ -82,11 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     computerChoiseBlock.textContent = ``;
                     userChoiseBlock.textContent = ``;
                     resultBlock.textContent = `Ты долбаёб? Такого ответа - нет!`;
-                    resultBlock.className = `result-block text-center text-white bg-red  black-border`
+                    resultBlock.className = `result-block text-center text-white bg-red black-border`;
                     return;
                 }
+
             let random = Math.floor(Math.random()*3)+1;
             console.log(random);
+
             let computer_choice = "";
                 if (random == 1) {
                     computer_choice = 'Камень';
@@ -95,29 +125,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     computer_choice = 'Бумага';
                 }
+
             let res = "";
                 if (+start == 1 && random == 2 || 
                     +start == 2 && random == 3 || 
                     +start == 3 && random == 1) {
-                    res = "ПОБЕДА!"
+                    res = 'ПОБЕДА!'
                 } else if (random == 1 && +start == 2 ||
                             random == 2 && +start == 3 || 
                             random == 3 && +start == 1) {
-                    res = "ПОРАЖЕНИЕ"
+                    res = 'ПОРАЖЕНИЕ'
                 } else {
-                    res = "НИЧЬЯ"
+                    res = 'НИЧЬЯ'
                 }
 
+            //Стрелочная функция для замены цвета фона
+            const setBgClass = (elem, condition) => {
+                elem.classList.remove('bg-red', 'bg-green', 'bg-yellow', 'invisible');
 
-
-            if (res === "НИЧЬЯ") {
-                resultBlock.classList.add('bg-yellow', 'text-white', 'black-border');
-            } else if (res === "ПОБЕДА!") {
-                resultBlock.classList.add('bg-green', 'text-white', 'black-border');
-            } else if (res === "ПОРАЖЕНИЕ") {
-                resultBlock.classList.add('bg-red', 'text-white', 'black-border');
+                if (condition === 'НИЧЬЯ') {
+                    resultBlock.classList.add(`bg-yellow`);
+                } else if (condition === 'ПОБЕДА!') {
+                    resultBlock.classList.add(`bg-green`)
+                } else if (condition === 'ПОРАЖЕНИЕ') {
+                    resultBlock.classList.add(`bg-red`)               
+                } else {
+                    resultBlock.classList.add(`bg-red`)               
+                }
             }
-                
+
+            setBgClass(resultBlock, res);
                 
             computerChoiseBlock.textContent = `Выбор Компьютера: ${computer_choice}`; 
             userChoiseBlock.textContent = `Ваш выбор: ${myChoice}`;
@@ -129,50 +166,128 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Game_1_button element not found on this page');
     }
 
-});
+    // Проверяет является ли значение целым, положительным числом
+    function isPositiveInteger(value) {
+        return /^\d+$/.test(value);
+    };
 
-document.addEventListener('DOMContentLoaded', () => {
-    const add_lox_button = document.querySelector("#add_lox");
-    if (add_lox_button) {
-        function Add_lox_func(){
-            const container = document.querySelector("#add_lox_block");
-            const content = document.createElement("div");
-            
-            content.classList.add("lox_content");
-            content.textContent = "Ты Лох!";
+    // Функция для проверки и получения элемента *НУЖНА ДОРАБОТКА
+    // function MyGetElementById(id) {
+    //     const element = document.getElementById(id);
+    //     if (!element) {
+    //         console.error(`Элемент с ID ${id} не найден`);
+    //         return null;
+    //     }
+    //     return element;
+    // }
 
-            container.appendChild(content);
+    // Калькулятор принимает два числа и оператор
+    function MyCalc(n1, n2, oper) {
+        switch(oper) {
+            case '+': 
+                return n1 + n2;
+            case '-': 
+                return n1 - n2;
+            case '*': 
+                return n1 * n2;
+            case '/': 
+                return n1 / n2;
+            default: return "Ошибка";
         }
+    };
 
-        add_lox_button.addEventListener("click", Add_lox_func);
+
+    //Page 4
+    const calcSubmit = document.getElementById("calc-submit");
+    if (calcSubmit) {
+        const calcInput1 = document.getElementById("calc-input-1");
+        const calcInput2 = document.getElementById("calc-input-2");
+        const sum = document.getElementById("calc-sum");
+        const sub = document.getElementById("calc-subtract");
+        const divide = document.getElementById("calc-divide");
+        const mult = document.getElementById("calc-multiply");
+        const calcResult = document.getElementById("calc-result");
+
+        let operator = '+';
+
+        sum.onclick = function() {
+            operator = '+';
+        };
+
+        sub.onclick = function() {
+            operator = '-';
+        };
+
+        mult.onclick = function() {
+            operator = '*';
+        };
+
+        divide.onclick = function() {
+            operator = '/';
+        };
+        calcSubmit.onclick = function() {
+            let num_1 = Number(calcInput1.value);
+            let num_2 = Number(calcInput2.value);
+            let res = MyCalc(num_1, num_2, operator);
+            calcResult.textContent = res;
+        };
+
+        // Массив операторов и массив классов которые нужно присвоить элементу
+        const actions = [sum, sub, divide, mult];
+        const classes = ['fa-beat-fade','fa-lg'];
+
+        // Применяем функцию к каждому оператору
+        actions.forEach(elem => {
+             elem.onmouseover = () => multiClassToggle(elem.firstChild, classes);
+             elem.onmouseout = () => multiClassToggle(elem.firstChild, classes);
+             elem.onfocus = () => multiClassToggle(elem.firstChild, classes);
+             elem.onblur = () => multiClassToggle(elem.firstChild, classes);
+        });
     } else {
-        console.log('add_lox_button element not found on this page');
+        console.log('calcSubmit element not found on this page');
+    }
+
+    // Принимает элемент и массив классов, которые нужно переключить
+    function multiClassToggle(elem, clsArr) {
+        clsArr.forEach(cls => {
+            elem.classList.toggle(cls);
+        });
+    }
+
+   //Page 5
+    const notesInput = document.getElementById("notesInput");
+    if (notesInput) {
+        const addBtn = document.getElementById("addBtn");
+        const noteList = document.getElementById("noteList");
+        const defaultNote = document.getElementById("defaultNote");
+        const editBtn = document.getElementById("editBtn");
+        const deleteBtn = document.getElementById("deleteBtn");
+
+        addBtn.onclick = function () {
+            if (notesInput.value.length === 0) {
+                return
+            }
+            let newNote = `
+            <li id="defaultNote" class="note notes-element">
+                <span>${notesInput.value}</span>
+                <div class="note-button ps-1 pe-1 mb-1">
+                    <span class="btn bg-green text-white">+</span>
+                    <span class="btn bg-red text-white">x</span>
+                </div>
+            </li>
+            `
+            noteList.insertAdjacentHTML('beforeend', newNote)
+            notesInput.value = ""
+        }
+    } else {
+        console.log('notesInput element not found on this page');
     }
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const remove_All_btn = document.querySelector("#remove_all");
-    if (remove_All_btn) {
-        function remove_text_func(){
-            const container = document.querySelector("#add_lox_block");
-            container.textContent = "";
-        }
-
-        remove_all.addEventListener("click", remove_text_func);
-    } else {
-        console.log('remove_All_btn element not found on this page');
-    }
-});
-
-// Проверяет является ли значение целым, положительным числом
-function isPositiveInteger(value) {
-    return /^\d+$/.test(value);
-}
 
 // function alertFunction() {
 //     alert("YAY! YOU DID IT!");
 //   }
-//   const btn = document.querySelector("#btn");
+//   const btn = document.getElementById("btn");
   
   // METHOD 3
 //   btn.addEventListener("click", function (e) {

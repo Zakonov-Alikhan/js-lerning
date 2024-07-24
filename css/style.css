@@ -2,6 +2,14 @@ html {
     font-size: 18px;
 }
 
+:root {
+    --red-color:#dc3545;
+    --yellow-color: rgb(255, 157, 0);
+    --green-color: #198754;
+    --grey-green-color: #9ba29b;
+    --black-color: #212529;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
@@ -19,14 +27,19 @@ img {
 }
 
 .bg-red {
-    background-color: #dc3545;
+    background-color: var(--red-color);
 }
 .bg-yellow {
-    background-color: #ffc107;
+    background-color: var(--yellow-color);
 }
 .bg-green {
-    background-color: #198754;
+    background-color: var(--green-color);
 }
+.bg-grey {
+    background-color: var(--grey-green-color);
+}
+
+
 .black-border {
     border: 2px solid #212529;
     border-radius: .25rem;
@@ -186,7 +199,80 @@ main {
 
 /*RPC.html*/
 
-  
+/* CALC.html */
+.calc-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border-radius: 0.5rem;
+}
+
+.calc-container button {
+    border-radius: 0.5em;
+}
+
+.calc-input {
+    grid-column: 1/span 4;
+    grid-row: span 1;
+}
+
+.operator-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-column: 2/span 2;
+    grid-row: 3/span 2;
+}
+.operator-container button {
+    color: #fff;
+}
+
+.operator-container button:focus {
+    background-color: #fff;
+    color: var(--yellow-color);
+    transition: all .3s;
+}
+
+.calc-submit {
+    grid-column: span 4;
+    grid-row: span 1;
+    color: var(--black-color);
+}
+.calc-submit:hover {
+    background-color: var(--yellow-color);
+    color: #fff;
+    transition: all .3s;
+}
+
+.culc-result-block {
+    grid-column: span 4;
+    grid-row: span 1;
+    background-color: #212529;
+    color: #fff;
+}
+
+/* CALC.html */
+
+/*NOTES.html*/
+
+.notes-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-radius: 0.5rem;
+}
+
+.notes-element {
+    grid-column: span 4;
+}
+
+.note {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+/*NOTES.html*/
+
 footer {
     /* flex-shrink: 0; Не уменьшать футер */
     border-top: 1px solid #00000017;
