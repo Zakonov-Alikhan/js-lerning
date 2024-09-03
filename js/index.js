@@ -229,6 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let num_1 = Number(calcInput1.value);
             let num_2 = Number(calcInput2.value);
             let res = MyCalc(num_1, num_2, operator);
+            if (!isPositiveInteger(num_1) || !isPositiveInteger(num_2)) {
+                res = "Wrong Input"
+            }
             calcResult.textContent = res;
         };
 
@@ -263,21 +266,66 @@ document.addEventListener('DOMContentLoaded', () => {
         const editBtn = document.getElementById("editBtn");
         const deleteBtn = document.getElementById("deleteBtn");
 
+        const notes = [
+            {
+                title: "Дефолтная заментка 1",
+                complited: true,
+            }, 
+            {
+                title: "Дефолтная заметка 2",
+                complited: false,
+            }
+        ];
+
+        function render(){
+            noteList.textContent = ""
+            for (let i = 0; i < notes.length; i++){
+                noteList.insertAdjacentHTML('beforeend', getNoteTmpl(notes[i], i));
+                notesInput.value = ""
+            }
+        }
+
+        render()
+
         addBtn.onclick = function () {
             if (notesInput.value.length === 0) {
                 return
             }
-            let newNote = `
+            let newNote = {
+                title: notesInput.value,
+                complited: false
+            }
+            notes.push(newNote)
+            render()
+        }
+
+        noteList.onclick = function (event) {
+            console.log(event.target.dataset.index)
+            if (event.target.dataset.index){
+                const index =  Number(event.target.dataset.index)
+                const type = event.target.dataset.type
+
+                if (type === 'toggle'){
+                    console.log('toggle', index)
+                    notes[index].complited = !notes[index].complited
+                } else if (type === 'remove'){
+                    console.log('remove', index)
+                    notes.splice(index, 1)
+                } 
+                render()
+            }
+        }
+
+        function getNoteTmpl(note, index) {
+            return `
             <li id="defaultNote" class="note notes-element">
-                <span>${notesInput.value}</span>
+                <span class = "${note.complited ? 'text-decoration-line-through' : ''}">${note.title}</span>
                 <div class="note-button ps-1 pe-1 mb-1">
-                    <span class="btn bg-green text-white">+</span>
-                    <span class="btn bg-red text-white">x</span>
+                    <span class="btn bg-${note.complited ? 'yellow' : 'green'} text-white" data-index="${index}" data-type="toggle">+</span>
+                    <span class="btn bg-red text-white" data-index="${index}"data-type="remove">x</span>
                 </div>
             </li>
             `
-            noteList.insertAdjacentHTML('beforeend', newNote)
-            notesInput.value = ""
         }
     } else {
         console.log('notesInput element not found on this page');
