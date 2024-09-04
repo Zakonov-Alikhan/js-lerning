@@ -279,6 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function render(){
             noteList.textContent = ""
+            if (notes.length === 0) {
+                noteList.innerHTML = `<p class="align-items-center">Заметок нет</p>`
+            }
             for (let i = 0; i < notes.length; i++){
                 noteList.insertAdjacentHTML('beforeend', getNoteTmpl(notes[i], i));
                 notesInput.value = ""

@@ -13,6 +13,7 @@ html {
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
+    background-color: var(--black-color);
 }
 
 header {
@@ -151,10 +152,14 @@ main {
     font-size: 50px;
 }
 
-.card .card-img-top {
+.card-img-top {
     height: 360px;
-    background-color: whitesmoke;
+    background-color: #000;
     object-fit: contain;
+}
+.card {
+    color: #fefefe;
+    background-color: #000;
 }
 
 /*RPC.html*/
@@ -267,8 +272,12 @@ main {
 
 .note {
     display: flex;
+    color: #fefefe;
+    /* background-color:#fefefe; */
     flex-direction: row;
     justify-content:space-between;
+    align-items: center;
+    padding: 1%;
 }
 
 /*NOTES.html*/
