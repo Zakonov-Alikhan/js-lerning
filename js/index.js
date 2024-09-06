@@ -262,9 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (notesInput) {
         const addBtn = document.getElementById("addBtn");
         const noteList = document.getElementById("noteList");
-        const defaultNote = document.getElementById("defaultNote");
-        const editBtn = document.getElementById("editBtn");
-        const deleteBtn = document.getElementById("deleteBtn");
 
         const notes = [
             {
@@ -276,6 +273,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 complited: false,
             }
         ];
+
+        function getNoteTmpl(note, index) {
+            return `
+            <li id="defaultNote" class="note notes-element rounded">
+                <span class = "${note.complited ? 'text-decoration-line-through' : ''}">${note.title}</span>
+                <div class="note-button ps-1 pe-1 mb-1">
+                    <span class="btn bg-${note.complited ? 'yellow' : 'green'} text-white" data-index="${index}" data-type="toggle">+</span>
+                    <span class="btn bg-red text-white" data-index="${index}"data-type="remove">x</span>
+                </div>
+            </li>
+            `
+        }
 
         function render(){
             noteList.textContent = ""
@@ -319,21 +328,94 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function getNoteTmpl(note, index) {
-            return `
-            <li id="defaultNote" class="note notes-element">
-                <span class = "${note.complited ? 'text-decoration-line-through' : ''}">${note.title}</span>
-                <div class="note-button ps-1 pe-1 mb-1">
-                    <span class="btn bg-${note.complited ? 'yellow' : 'green'} text-white" data-index="${index}" data-type="toggle">+</span>
-                    <span class="btn bg-red text-white" data-index="${index}"data-type="remove">x</span>
-                </div>
-            </li>
-            `
-        }
+        
     } else {
         console.log('notesInput element not found on this page');
     }
 });
+
+
+   //Page 6
+   const timeContainer = document.getElementById("time_container");
+   if (timeContainer) {
+       const timeResult = document.getElementById("time_result");
+       let mode = 'time';  
+
+       // функция с замыканием можно было и без него, 
+       // но почему бы и да
+       function bindMode(typeName) {
+            return function() {
+                mode = typeName;
+                update();
+            }
+        }
+       const time_block_nav = document.getElementById("time_block_nav");
+       time_block_nav.onclick = function (event) {
+            console.log(event.target.id)
+
+            switch (event.target.id) {
+                case 'time_date': 
+                    bindMode('date')();
+                    break;
+                case 'time_timer':
+                    bindMode('timer')();
+                    break;
+                case 'time_actual': 
+                    bindMode('time')();
+                    break;
+                default: 
+                    mode = 'time';
+            }
+            
+            console.log(mode)
+            console.log(event.target)
+            console.log(event.target.data_check)
+            activeTimeFormatBtn(event.target)
+
+            // если то на что мы кликнули кнопка
+            if (event.target.tagName === 'BUTTON') {
+                // мы удаляем класс активной кнопки со всех кнопок
+                document.querySelectorAll('.time-block-nav button').forEach(btn => {
+                    btn.classList.remove('active-time-btn');
+                    btn.data_check = 'false';
+                }); 
+
+                // после того как всё удалили, на выжженой земле сажаем новый класс, туда куда нажали
+                event.target.classList.add('active-time-btn');
+                event.target.data_check = 'true';
+            }
+       }
+
+       setInterval(() => { update() }, 1000);
+       update() // объявляем эту функцию, чтобы не ждать отображения
+
+       function update() {
+            timeResult.textContent = formatTime(mode);
+       }
+
+       function formatTime (formatMode) {
+            const now = new Date;
+            switch (formatMode) {
+                case 'time': 
+                    return now.toLocaleTimeString();
+                case 'date': 
+                    return now.toLocaleDateString();
+                case 'timer': 
+                    return `Данный блок ещё в разработке
+                    :(`
+                default: 'Ошибка';
+            }
+       }
+
+       function activeTimeFormatBtn(target) {
+            if (target.activ) {
+                target = `<button class="${target.className} active-time-btn" id="${target.id}" activ="${target.activ}" value="${target.value}">${target.value}</button>`
+            } else { 
+                target = `<button class="${target.className} " id="${target.id}" activ="${target.activ}" value="${target.value}">${target.value}</button>`
+            }
+       }
+   }
+
 
 // function alertFunction() {
 //     alert("YAY! YOU DID IT!");

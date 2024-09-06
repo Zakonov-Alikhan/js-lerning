@@ -14,6 +14,7 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     background-color: var(--black-color);
+    color: #fefefe;
 }
 
 header {
@@ -29,15 +30,23 @@ img {
 
 .bg-red {
     background-color: var(--red-color);
+    color:#fefefe
 }
 .bg-yellow {
     background-color: var(--yellow-color);
+    color:#fefefe
 }
 .bg-green {
     background-color: var(--green-color);
+    color:#fefefe
 }
 .bg-grey {
     background-color: var(--grey-green-color);
+    color:#fefefe
+}
+.bg-white {
+    background-color: #fefefe;
+    color:var(--black-color)
 }
 
 
@@ -281,6 +290,26 @@ main {
 }
 
 /*NOTES.html*/
+
+/*TIME.html*/
+.time-block-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content:space-around;
+    gap: 10px;
+}
+
+.time-result {
+    font-size: 84px;
+    margin: 10%;
+}
+
+.active-time-btn {
+    background-color: #fefefe;
+    color: var(--yellow-color);
+}
+
+/*TIME.html*/
 
 footer {
     /* flex-shrink: 0; Не уменьшать футер */

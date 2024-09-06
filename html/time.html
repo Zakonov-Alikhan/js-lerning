@@ -21,14 +21,15 @@
     </head>
     <body>
         <main class="p-5">
-            <div class="container">
-                <h2 class="text-center text-white">Заметки</h2>
-                <div class="notes-container container align-middle text-center mt-5 mb-5 col-6">
-                    <input type="text" placeholder="Введите название" id="notesInput" class="notes-element p-2 mb-2 rounded">
-                    <button id="addBtn" class="notes-element p-2 mb-2 rounded">Добавить</button>
-                    <ul id="noteList" class="note-list notes-element p-2 mb-2 rounded">
-                        
-                    </ul>
+            <h2 class="text-center p-5">Время</h2>
+            <div class="container bg-white p-3 shadow-sm rounded">
+                <div class="time-block-nav" id="time_block_nav">
+                    <button class="btn bg-yellow" id="time_date" data-check="false" value="Дата">Дата</button>
+                    <button class="btn bg-yellow" id="time_actual" data-check="true" value="Актуальное время">Актуальное время</button>
+                    <button class="btn bg-yellow" id="time_timer" data-check="false" value="Таймер">Таймер</button>
+                </div>
+                <div class="time-container container align-middle text-center mt-5 mb-5 col-6" id="time_container">
+                    <div class="time-result text-dark" id="time_result"></div>
                 </div>
             </div>
         </main>
