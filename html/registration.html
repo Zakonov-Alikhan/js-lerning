@@ -21,16 +21,18 @@
     </head>
     <body>
         <main class="p-5">
-            <h2 class="text-center p-5">Время</h2>
-            <div class="container bg-white p-3 shadow-sm rounded">
-                <div class="time-block-nav" id="time_block_nav">
-                    <button class="btn bg-yellow" id="time_date" data-check="false" value="Дата">Дата</button>
-                    <button class="btn bg-yellow active-time-btn" id="time_actual" data-check="true" value="Актуальное время">Актуальное время</button>
-                    <button class="btn bg-yellow" id="time_timer" data-check="false" value="Таймер">Таймер</button>
-                </div>
-                <div class="time-container container align-middle text-center mt-5 mb-5 col-6" id="time_container">
-                    <div class="time-result text-dark" id="time_result"></div>
-                </div>
+            <div class="container reg-container">
+                <form id="userForm" action="" method="post" class="container m-5 rounded">
+                    <h2 class="text-center text-white">Регистрация</h2>
+                    <label for="userRegLogin" class="form-label">Логин</label>
+                    <input id="userRegLogin" class="form-control" type="text">
+                    <br>
+                    <label for="userRegAge" class="form-label">Возраст</label>
+                    <input id="userRegAge" class="form-control" type="text">
+                    <br>
+                    <button type="submit" class="rounded">Зарегистрироваться</button>
+                </form>
+                <p id="responseMessage"></p>
             </div>
         </main>
     </body>

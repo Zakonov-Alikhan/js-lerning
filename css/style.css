@@ -127,6 +127,7 @@ main {
 */
 main {
     grid-row: 2; /* Основное содержимое занимает весь доступный оставшийся пространство */
+    background: linear-gradient(#272934, #212529);
 }
 
 .start_block {
@@ -149,6 +150,7 @@ main {
     background-size: cover;
     height: 100vh;
     padding: 5%;
+    box-shadow: inset 0em -1em 2em 0em var(--black-color);
 }
 
 .first_page_text{   
@@ -310,6 +312,68 @@ main {
 }
 
 /*TIME.html*/
+
+/*REGISTRATION.html*/
+
+/*REGISTRATION.html*/
+
+
+/* USERSList.html*/
+/* HTML: <div class="loader"></div> */
+/* .loader {
+    width: 10px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+  }
+  @keyframes l5 {
+      0%  {box-shadow: 15px 0 #ffffff, -15px 0 rgba(255, 255, 255, 0.133);background: #ffffff }
+      33% {box-shadow: 15px 0 #ffffff, -15px 0 rgba(255, 255, 255, 0.133);background: rgba(255, 255, 255, 0.133)}
+      66% {box-shadow: 15px 0 rgba(255, 255, 255, 0.133),-15px 0 #ffffff; background: #0002}
+      100%{box-shadow: 15px 0 rgba(255, 255, 255, 0.133),-15px 0 #ffffff; background: #ffffff }
+  } */
+
+  /* HTML: <div class="loader"></div> */
+.loader {
+    width: 28px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side,#ffa516 94%,#0000) top/8px 8px no-repeat,
+      conic-gradient(#0000 30%,#ffa516);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+    animation: l13 1s infinite linear;
+  }
+  @keyframes l13{ 
+    100%{transform: rotate(1turn)}
+  }
+
+  .user-list-item {
+    animation: 1s reveal-search;
+  }
+  
+  /* @keyframes show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  } */
+   
+  @keyframes reveal-search {
+    0% {
+      height: 0;
+      @include scaleX(0);
+      @include border-radius(50%);
+    }
+    50% {
+      height: 45.9px;
+      @include scaleX(0);
+      @include border-radius(50%);
+    }
+    100% {
+      @include scaleX(1);
+      @include border-radius(0);
+    }
+  }
+/* USERSList.html*/
 
 footer {
     /* flex-shrink: 0; Не уменьшать футер */

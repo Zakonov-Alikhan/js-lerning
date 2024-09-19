@@ -332,89 +332,93 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.log('notesInput element not found on this page');
     }
+    
+    //Page 6
+    const timeContainer = document.getElementById("time_container");
+    if (timeContainer) {
+        const timeResult = document.getElementById("time_result");
+        let mode = 'time';  
+    
+        // функция с замыканием можно было и без него, 
+        // но почему бы и да
+        function bindMode(typeName) {
+             return function() {
+                 mode = typeName;
+                 update();
+             }
+         }
+    
+        const time_block_nav = document.getElementById("time_block_nav");
+        time_block_nav.onclick = function (event) {
+             console.log(event.target.id)
+    
+             switch (event.target.id) {
+                 case 'time_date': 
+                     bindMode('date')();
+                     break;
+                 case 'time_timer':
+                     bindMode('timer')();
+                     break;
+                 case 'time_actual': 
+                     bindMode('time')();
+                     break;
+                 default: 
+                     mode = 'time';
+             }
+             
+             console.log(mode)
+             console.log(event.target)
+             console.log(event.target.data_check)
+             activeTimeFormatBtn(event.target)
+    
+             // если то на что мы кликнули кнопка
+             if (event.target.tagName === 'BUTTON') {
+                 // мы удаляем класс активной кнопки со всех кнопок
+                 document.querySelectorAll('.time-block-nav button').forEach(btn => {
+                     btn.classList.remove('active-time-btn');
+                     btn.data_check = 'false';
+                 }); 
+    
+                 // после того как всё удалили, на выжженой земле сажаем новый класс, туда куда нажали
+                 event.target.classList.add('active-time-btn');
+                 event.target.data_check = 'true';
+             }
+        }
+    
+        setInterval(() => { update() }, 1000);
+        update() // объявляем эту функцию, чтобы не ждать отображения
+    
+        function update() {
+             timeResult.textContent = formatTime(mode);
+        }
+    
+        function formatTime (formatMode) {
+             const now = new Date;
+             switch (formatMode) {
+                 case 'time': 
+                     return now.toLocaleTimeString();
+                 case 'date': 
+                     return now.toLocaleDateString();
+                 case 'timer': 
+                     return `Данный блок ещё в разработке
+                     :(`
+                 default: 'Ошибка';
+             }
+        }
+    
+        function activeTimeFormatBtn(target) {
+             if (target.activ) {
+                 target = `<button class="${target.className} active-time-btn" id="${target.id}" activ="${target.activ}" value="${target.value}">${target.value}</button>`
+             } else { 
+                 target = `<button class="${target.className} " id="${target.id}" activ="${target.activ}" value="${target.value}">${target.value}</button>`
+             }
+        }
+    }
 });
 
 
-   //Page 6
-   const timeContainer = document.getElementById("time_container");
-   if (timeContainer) {
-       const timeResult = document.getElementById("time_result");
-       let mode = 'time';  
 
-       // функция с замыканием можно было и без него, 
-       // но почему бы и да
-       function bindMode(typeName) {
-            return function() {
-                mode = typeName;
-                update();
-            }
-        }
-       const time_block_nav = document.getElementById("time_block_nav");
-       time_block_nav.onclick = function (event) {
-            console.log(event.target.id)
 
-            switch (event.target.id) {
-                case 'time_date': 
-                    bindMode('date')();
-                    break;
-                case 'time_timer':
-                    bindMode('timer')();
-                    break;
-                case 'time_actual': 
-                    bindMode('time')();
-                    break;
-                default: 
-                    mode = 'time';
-            }
-            
-            console.log(mode)
-            console.log(event.target)
-            console.log(event.target.data_check)
-            activeTimeFormatBtn(event.target)
-
-            // если то на что мы кликнули кнопка
-            if (event.target.tagName === 'BUTTON') {
-                // мы удаляем класс активной кнопки со всех кнопок
-                document.querySelectorAll('.time-block-nav button').forEach(btn => {
-                    btn.classList.remove('active-time-btn');
-                    btn.data_check = 'false';
-                }); 
-
-                // после того как всё удалили, на выжженой земле сажаем новый класс, туда куда нажали
-                event.target.classList.add('active-time-btn');
-                event.target.data_check = 'true';
-            }
-       }
-
-       setInterval(() => { update() }, 1000);
-       update() // объявляем эту функцию, чтобы не ждать отображения
-
-       function update() {
-            timeResult.textContent = formatTime(mode);
-       }
-
-       function formatTime (formatMode) {
-            const now = new Date;
-            switch (formatMode) {
-                case 'time': 
-                    return now.toLocaleTimeString();
-                case 'date': 
-                    return now.toLocaleDateString();
-                case 'timer': 
-                    return `Данный блок ещё в разработке
-                    :(`
-                default: 'Ошибка';
-            }
-       }
-
-       function activeTimeFormatBtn(target) {
-            if (target.activ) {
-                target = `<button class="${target.className} active-time-btn" id="${target.id}" activ="${target.activ}" value="${target.value}">${target.value}</button>`
-            } else { 
-                target = `<button class="${target.className} " id="${target.id}" activ="${target.activ}" value="${target.value}">${target.value}</button>`
-            }
-       }
-   }
 
 
 // function alertFunction() {
@@ -487,55 +491,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // book.getSummary()
 
-function make_Counter() {
-    let count = 1; 
+// function make_Counter() {
+//     let count = 1; 
     
-    function up_Counter() {
-        console.log(count++)
-    }
+//     function up_Counter() {
+//         console.log(count++)
+//     }
 
-    return up_Counter
-}
+//     return up_Counter
+// }
 
-const counter = make_Counter(); 
-counter()
-counter()
-counter()
+// const counter = make_Counter(); 
+// counter()
+// counter()
+// counter()
 
-function createCounter() {
-    let count = 0; // Приватная переменная
+// function createCounter() {
+//     let count = 0; // Приватная переменная
 
-    return {
-        // увеличивает count 
-        increment: function() {
-            count++;
-            console.log(count);
-        },
-        // С помщью этого метода мы можем достать локальную переменную
-        getCount: function() { 
-            return count;
-        }
-    };
-}
-let xy = "lox"
+//     return {
+//         // увеличивает count 
+//         increment: function() {
+//             count++;
+//             console.log(count);
+//         },
+//         // С помщью этого метода мы можем достать локальную переменную
+//         getCount: function() { 
+//             return count;
+//         }
+//     };
+// }
+// let xy = "lox"
 
-let book = {
-    title: `"Lox ne Mamont"`,
-    author: "Lox Loxovich",
-    pages: 300,
-    getDescription: function(){
-        console.log(`${this.title} by ${this.author}, Pages: ${this.pages}`)
-    },
-    y: xy
-}
+// let book = {
+//     title: `"Lox ne Mamont"`,
+//     author: "Lox Loxovich",
+//     pages: 300,
+//     getDescription: function(){
+//         console.log(`${this.title} by ${this.author}, Pages: ${this.pages}`)
+//     },
+//     y: xy
+// }
 // xx = "loxushka"
-book.getDescription()
-book.publisher = "Loxovich.INC"
-console.log(book.publisher)
-delete book.pages
-console.log(book.pages)
-console.log(book.x = "loxushka")
-console.log(book.y)
+// book.getDescription()
+// book.publisher = "Loxovich.INC"
+// console.log(book.publisher)
+// delete book.pages
+// console.log(book.pages)
+// console.log(book.x = "loxushka")
+// console.log(book.y)
 
 // let std_name = prompt("What's your name, student?")
 // let std_age = prompt("How old are you?")
@@ -571,93 +575,266 @@ console.log(book.y)
 
 // teacher.introduce()
 
-let tchr_students = ["Lox1", "Lox2", "Lox3", "Loxushka1"]
+// let tchr_students = ["Lox1", "Lox2", "Lox3", "Loxushka1"]
 
-let course = {
-    title: "???",
-    description: "???",
-    students: tchr_students,
+// let course = {
+//     title: "???",
+//     description: "???",
+//     students: tchr_students,
 
-    addStudent: function(name) {
-        tchr_students.push(name)
-    },
-    removeStudent: function(name) {
-        let index = this.students.indexOf(name);
-        if (index !== -1) {
-            this.students.splice(index, 1);
-        }
-    },
-    listStudents: function(){
-        console.log(this.students)
-    }
-}
+//     addStudent: function(name) {
+//         tchr_students.push(name)
+//     },
+//     removeStudent: function(name) {
+//         let index = this.students.indexOf(name);
+//         if (index !== -1) {
+//             this.students.splice(index, 1);
+//         }
+//     },
+//     listStudents: function(){
+//         console.log(this.students)
+//     }
+// }
 
-course.addStudent("Nelox")
-course.listStudents()
-course.removeStudent("Lox1")
-course.listStudents()
+// course.addStudent("Nelox")
+// course.listStudents()
+// course.removeStudent("Lox1")
+// course.listStudents()
 
-let numbers = [1, 2, 3, 4, 5]
+// let numbers = [1, 2, 3, 4, 5]
 
-let sum = function(arr){
-    let res = 0;
-    for (let i = 0; i < arr.length; i++){
-        res += arr[i]
-    }
-    return res
-}
+// let sum = function(arr){
+//     let res = 0;
+//     for (let i = 0; i < arr.length; i++){
+//         res += arr[i]
+//     }
+//     return res
+// }
 
-let max = function(arr) {
-   let res = 0;
+// let max = function(arr) {
+//    let res = 0;
    
-   for (let i = 0; i < arr.length; i++){
-    if (res < arr[i]) {
-        res = arr[i];
-    }
-   }
-   return res
-}
+//    for (let i = 0; i < arr.length; i++){
+//     if (res < arr[i]) {
+//         res = arr[i];
+//     }
+//    }
+//    return res
+// }
 
-let chot = function(arr) {
-    let res = arr.filter(n => n % 2 === 0);
-    return res
-}
+// let chot = function(arr) {
+//     let res = arr.filter(n => n % 2 === 0);
+//     return res
+// }
 
-let res = sum(numbers);
-let res2 = max(numbers);
-let res3 = chot(numbers);
-console.log(res);
-console.log(res2);
-console.log(res3);
+// let res = sum(numbers);
+// let res2 = max(numbers);
+// let res3 = chot(numbers);
+// console.log(res);
+// console.log(res2);
+// console.log(res3);
 
-let students = [
-    {name: "Oleg", grade: "4"}, 
-    {name: "Pasha", grade: "5"},
-    {name: "Asshat", grade: "0"},
-    {name: "Dalbek", grade: "69"},
-    {name: "Lox", grade: "3"}
-];
+// let students = [
+//     {name: "Oleg", grade: "4"}, 
+//     {name: "Pasha", grade: "5"},
+//     {name: "Asshat", grade: "0"},
+//     {name: "Dalbek", grade: "69"},
+//     {name: "Lox", grade: "3"}
+// ];
 
-let gradeThreePlus = function(arr){
-    let res = [];
-    for (let i = 0; i < arr.length; i++){
-        if (+arr[i].grade > 3){
-            res.push(arr[i].name)
+// let gradeThreePlus = function(arr){
+//     let res = [];
+//     for (let i = 0; i < arr.length; i++){
+//         if (+arr[i].grade > 3){
+//             res.push(arr[i].name)
+//         }
+//     }
+//     return res
+// }
+
+// console.log(gradeThreePlus(students))
+
+// let middleGrade = function(arr){
+//     let res = 0;
+//     for (let i of arr){ // альтернатива для (let i = 0; i < arr.length; i++)
+//         res += +i.grade
+//     }
+//     return res / arr.length
+// }
+
+// console.log(middleGrade(students))
+
+
+// let promise = new Promise(function(resolve, reject){
+//     let age = 8;
+
+//     setTimeout( () =>
+//         (age >= 18) ? resolve("Регистрация успешна!"): reject("Ошибка: Пользователь слишком молод для регистрации")
+//     , 2000)
+// })
+
+// promise
+//     .then(result => console.log(result))
+//     .catch(error => console.log(error));
+// console.log("Ожидание завершения промиса...");
+
+// function checkUserAge(age) {
+//     return new Promise(function(resolve, reject) {
+//         setTimeout(() => {
+//             if (age >= 18) {
+//                 resolve("Регистрация успешна!");
+//             } else {
+//                 reject("Ошибка: Пользователь слишком молод для регистрации");
+//             }
+//         }, 2000);
+//     });
+// }
+
+// async function registerUser(age) {
+//     try {
+//         let result = await checkUserAge(age); // Ожидание результата промиса
+//         console.log(result); // Вывод успешного результата
+//     } catch (error) {
+//         console.log(error); // Обработка ошибки
+//     }
+// }
+
+// registerUser(20); // Пример успешной регистрации
+// // registerUser(16); // Пример ошибки регистрации
+// console.log("Ожидание завершения регистрации...");
+
+
+// async function getData() {
+//     try {
+//         let res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+//         let data = await res.json();
+//         console.log(data);
+//     } catch (error) {
+//         console.log('Ошибка:', error);
+//     }
+// }
+// getData();
+
+// document.getElementById('userForm').addEventListener('submit', function(event) {
+//     event.preventDefault()
+
+//     const name = document.getElementById('userRegLogin').value
+//     const age = document.getElementById('userRegAge').value
+//     const url = 'https://jsonplaceholder.typicode.com/posts'
+
+//     try {
+//         const response = fetch(url, {
+//             method: 'POST', 
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({name: name, age: age})
+//         });
+
+//         if(!response.ok) {
+//             throw new Error('Что-то пошло не так')
+//         } 
+//         response.json()
+//         document.getElementById('responseMessage').innerHTML = `Данные отправленны успешно`;
+//     } catch(error) {
+//         document.getElementById('responseMessage').innerHTML =`Ошибка: ` + error.message
+//     }
+// })
+
+
+
+// const readline = require('readline');
+
+// // Чтение входных данных
+// const rl = readline.createInterface({
+//     input: process.stdin,
+//     output: process.stdout
+// });
+
+// rl.question('', (input) => {})
+
+//задача 3
+    // const readline = require('readline');
+    // const rl = readline.createInterface({
+    //     input: process.stdin,
+    //     output: process.stdout
+    // });
+    
+    // let inputLines = [];
+    // let inputCount = 0;
+    
+    // rl.on('line', (input) => {
+    //     inputLines.push(input.trim()); 
+    //     inputCount++;
+    
+    //     if (inputCount === 3) {
+    //         rl.close();
+    //     }
+    // });
+    
+    // rl.question('', (input1) => {
+    //     rl.question('', (input2) => {
+    //         rl.question('', (input3) => {
+    //             function GuesPassWord(input1, input2, input3){
+    //                 let len = Number(input3);
+    //                 let res = ""
+    //                 let finalRes = ""
+    //                 let letters = input2.split('');
+    //                 let allLetters = input1.split('');
+                    
+    //                 for (i = 0; i <= allLetters.length; i++){
+    //                     for (j = 0; j <= letters.length; j++){
+    //                         if(allLetters[i]==letters[j]){
+    //                             res+=allLetters[i]
+    //                         } else {
+    //                             j = 0;
+    //                             i--
+    //                         }
+    //                     }
+    //                 }
+    //                 return finalRes
+    //             }
+    //         }
+    //     }
+    // });
+
+    const DividerCounter = (n) => {
+        let count = 0;
+        for (let i = 1; i * i <= n; i++) {
+            if (n % i === 0) {
+                count++;
+                if (i !== n / i) {
+                    count++;
+                }
+            }
         }
+        return count;
     }
-    return res
-}
-
-console.log(gradeThreePlus(students))
-
-let middleGrade = function(arr){
-    let res = 0;
-    for (let i of arr){ // альтернатива для (let i = 0; i < arr.length; i++)
-        res += +i.grade
+    
+    function isPrime(num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 === 0 || num % 3 === 0) return false;
+        for (let i = 5; i * i <= num; i += 6) {
+            if (num % i === 0 || num % (i + 2) === 0) return false;
+        }
+        return true;
     }
-    return res / arr.length
-}
+    
+    function DividerCountersCounter(input) {
+        let [l, r] = input.split(' ').map(Number);
+        let count = 0;
+        
+        for (let i = l; i <= r; i++) {
+            let divisorCount = DividerCounter(i);
+            if (isPrime(divisorCount)) {
+                count++;
+            }
+        }
 
-console.log(middleGrade(students))
-
-
+        return count.toString()
+    }
+    
+    let input = "1 9";
+    DividerCountersCounter(input); // Выводит количество чисел в диапазоне от 1 до 9, количество делителей которых является простым числом
+    

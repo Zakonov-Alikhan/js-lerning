@@ -36,7 +36,7 @@ export function createHeader() {
                 </form>
               <ul class="navbar-nav top-menu ms-2 mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-profile nav-link active" aria-current="page" href="#"><i class="fa-regular fa-user"></i> Alikhan </a>
+                    <a class="nav-profile nav-link active" aria-current="page" href="registration.html"><i class="fa-regular fa-user"></i> Alikhan </a>
                 </li>
               </ul>                
               </div>
